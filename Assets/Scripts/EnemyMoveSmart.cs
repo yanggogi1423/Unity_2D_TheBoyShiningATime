@@ -82,6 +82,6 @@ public class EnemyMoveSmart : MonoBehaviour
     {
         _nextMove = Random.Range(-2,3);
         Invoke("Think",_thinkTime);
-        _anim.SetFloat("walkSpeed",_nextMove);
+        // _anim.SetFloat("walkSpeed",_nextMove);
     }
 }
