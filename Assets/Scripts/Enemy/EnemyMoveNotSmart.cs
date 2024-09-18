@@ -10,7 +10,7 @@ public class EnemyMoveNotSmart : MonoBehaviour
     Animator _anim;
     SpriteRenderer _sprite;
     BoxCollider2D _collider;
-    [SerializeField] private float _nextMove;
+    [SerializeField] private float _nextMove = 1f;
     [SerializeField] private float _thinkTime;
     void Awake()
     {
@@ -76,7 +76,7 @@ public class EnemyMoveNotSmart : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    void Think()//by eveny _thinkTime secs randomly choose it's velocity
+    void Think()//by enemy _thinkTime secs randomly choose it's velocity
     {
         _nextMove = Random.Range(-2,3);
         Invoke("Think",_thinkTime);

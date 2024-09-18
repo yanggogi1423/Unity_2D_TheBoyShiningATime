@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class playermove : MonoBehaviour
 {
-    private float _speed = 10.0f; //ÁÂ¿ì ÀÌµ¿¼Óµµ°ª
-    private float _jumpSpeed = 20.0f; //Á¡ÇÁ ÀÌµ¿¼Óµµ°ª
-    private bool _isGround = true; //Á¡ÇÁ °¡´É¿©ºÎ ÆÇ´Ü º¯¼ö
+    private float _speed = 10.0f; //ì¢Œìš° ì´ë™ì†ë„ê°’
+    private float _jumpSpeed = 20.0f; //ì í”„ ì´ë™ì†ë„ê°’
+    private bool _isGround = true; //ì í”„ ê°€ëŠ¥ì—¬ë¶€ íŒë‹¨ ë³€ìˆ˜
     public int playerHp = 4;
 
     private Rigidbody2D _rigid;
@@ -32,20 +32,20 @@ public class playermove : MonoBehaviour
 		
 	}
 
-    //ÇÃ·¹ÀÌ¾î ÀÌµ¿°ü·Ã ÇÔ¼ö
+    //í”Œë ˆì´ì–´ ì´ë™ê´€ë ¨ í•¨ìˆ˜
     void Move()
     {
-		//xÃà ¹æÇâÀ¸·Î Á¤ÇØÁø ¼Óµµ¸¸Å­ ÀÌµ¿
+		//xì¶• ë°©í–¥ìœ¼ë¡œ ì •í•´ì§„ ì†ë„ë§Œí¼ ì´ë™
 		float x = Input.GetAxisRaw("Horizontal");
 		_rigid.velocity = new Vector2(x * _speed, _rigid.velocity.y);
 
-		//ÇÃ·¹ÀÌ¾î ÁÂ¿ì ¹æÇâ Á¶Àı
+		//í”Œë ˆì´ì–´ ì¢Œìš° ë°©í–¥ ì¡°ì ˆ
 		if (Input.GetButtonDown("Horizontal"))
 		{
 			spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
 		}
 
-		//ÇÃ·¹ÀÌ¾î ÀÌµ¿ ¾Ö´Ï¸ŞÀÌ¼Ç
+		//í”Œë ˆì´ì–´ ì´ë™ ì• ë‹ˆë©”ì´ì…˜
 		if (_rigid.velocity.x == 0)
 		{
 			animator.SetBool("isRun", false);
@@ -56,10 +56,10 @@ public class playermove : MonoBehaviour
 		}
 	}
 
-	//ÇÃ·¹ÀÌ¾îÀÇ Á¡ÇÁ°ü·Ã ÇÔ¼ö
+	//í”Œë ˆì´ì–´ì˜ ì í”„ê´€ë ¨ í•¨ìˆ˜
 	void Jump()
     {
-        //°øÁßÀÌ ¾Æ´Ñ »óÅÂ¿¡¼­ space¹Ù¸¦ ´©¸£¸é Á¡ÇÁ
+        //ê³µì¤‘ì´ ì•„ë‹Œ ìƒíƒœì—ì„œ spaceë°”ë¥¼ ëˆ„ë¥´ë©´ ì í”„
         if (Input.GetKeyDown(KeyCode.Space)&&_isGround)
         {
             _rigid.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
@@ -67,7 +67,7 @@ public class playermove : MonoBehaviour
 			animator.SetBool("isJump", true);   
 		}
         
-        //Raycast¸¦ ÀÌ¿ëÇÏ´Â °æ¿ì
+        //Raycastë¥¼ ì´ìš©í•˜ëŠ” ê²½ìš°
         /*
         if(_rigid.velocity.y < 0)
         {
@@ -84,29 +84,29 @@ public class playermove : MonoBehaviour
     }
 
 
-    //¶¥°úÀÇ Ãæµ¹À» Ã¼Å©ÇÏ´Â ÇÔ¼ö
+    //ë•…ê³¼ì˜ ì¶©ëŒì„ ì²´í¬í•˜ëŠ” í•¨ìˆ˜
     void OnCollisionEnter2D(Collision2D collision)
     {
-        //GroundÅÂ±×ÀÎ ¹°Ã¼¿¡ Á¢ÃËÇØ ÀÖÀ»¶§(Á¡ÇÁ»óÅÂ°¡ ¾Æ´Ò½Ã)
+        //Groundíƒœê·¸ì¸ ë¬¼ì²´ì— ì ‘ì´‰í•´ ìˆì„ë•Œ(ì í”„ìƒíƒœê°€ ì•„ë‹ì‹œ)
         if (collision.gameObject.CompareTag("Ground"))
         {
             _isGround=true;
             animator.SetBool("isJump", false);
         }
-        //¸ó½ºÅÍ¿¡°Ô ÇÇÇØ¸¦ ÀÔÀº °æ¿ì
+        //ëª¬ìŠ¤í„°ì—ê²Œ í”¼í•´ë¥¼ ì…ì€ ê²½ìš°
         if(collision.gameObject.tag == "Enemy")
         {
             OnDamaged(collision.transform.position);
         }
     }
-    //ÇÇ°İ°ü·Ã ÇÔ¼ö
+    //í”¼ê²©ê´€ë ¨ í•¨ìˆ˜
     void OnDamaged(Vector2 nowPos)
     {
         playerHp--;
         gameObject.layer = 8;
         spriteRenderer.color = new Color(1, 1, 1, 0.5f);
 
-        //ÇÇ°İ½Ã ÀÌµ¿
+        //í”¼ê²©ì‹œ ì´ë™
         int dict = 0;
         if (transform.position.x - nowPos.x > 0)
             dict = 1;
@@ -114,7 +114,7 @@ public class playermove : MonoBehaviour
             dict = -1;
         _rigid.AddForce(new Vector2(dict,1)*1,ForceMode2D.Impulse);
 
-        //ÇÇ°İ ¾Ö´Ï
+        //í”¼ê²© ì• ë‹ˆ
         animator.SetTrigger("isDamaged");
 
         Invoke("OffDamaged", 2);

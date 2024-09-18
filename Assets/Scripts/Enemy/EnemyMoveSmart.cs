@@ -10,7 +10,7 @@ public class EnemyMoveSmart : MonoBehaviour
     Animator _anim;
     SpriteRenderer _sprite;
     BoxCollider2D _collider;
-    [SerializeField] private float _nextMove;
+    [SerializeField] private float _nextMove = 1f;
     [SerializeField] private float _thinkTime;
     void Awake()
     {
