@@ -9,15 +9,15 @@ public class EnemyMoveNotSmart : MonoBehaviour
     Rigidbody2D _rigid;
     Animator _anim;
     SpriteRenderer _sprite;
-    BoxCollider2D _collider;
-    [SerializeField] private float _nextMove = 1f;
-    [SerializeField] private float _thinkTime;
+    BoxCollider2D _collider; 
+    private float _nextMove = 1f;
+    //private float _thinkTime = 7f;
     void Awake()
     {
         _rigid = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         _sprite = GetComponent<SpriteRenderer>();
-        Invoke("Think",_thinkTime);
+        //Invoke("Think",_thinkTime);
     }
 
     
@@ -42,9 +42,10 @@ public class EnemyMoveNotSmart : MonoBehaviour
         {
             
             _anim.SetBool("isHit", true);
-            _collider.enabled = false;
-            _rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
-            Invoke("DeActive",5);
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            // _collider.enabled = false;
+            _rigid.AddForce(Vector2.up * 1, ForceMode2D.Impulse);
+            Destroy(gameObject,3f);
         }
     }
     void CheckCliff()
@@ -56,8 +57,8 @@ public class EnemyMoveNotSmart : MonoBehaviour
         if (rayHit.collider == null)//When meet cliff turn around
         {
             _nextMove *= -1f;
-            CancelInvoke();
-            Invoke("Think",_thinkTime);
+            //CancelInvoke();
+            //Invoke("Think",_thinkTime);
         }
         
     }
@@ -79,7 +80,7 @@ public class EnemyMoveNotSmart : MonoBehaviour
     void Think()//by enemy _thinkTime secs randomly choose it's velocity
     {
         _nextMove = Random.Range(-2,3);
-        Invoke("Think",_thinkTime);
+        //Invoke("Think",_thinkTime);
         // _anim.SetFloat("walkSpeed",_nextMove);
     }
 }
