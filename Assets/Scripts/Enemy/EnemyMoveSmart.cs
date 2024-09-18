@@ -78,7 +78,7 @@ public class EnemyMoveSmart : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    void Think()//by eveny _thinkTime secs randomly choose it's velocity
+    void Think()//by enemy _thinkTime secs randomly choose it's velocity
     {
         _nextMove = Random.Range(-2,3);
         Invoke("Think",_thinkTime);
