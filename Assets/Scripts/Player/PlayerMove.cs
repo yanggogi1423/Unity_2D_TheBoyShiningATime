@@ -24,6 +24,7 @@ public class playermove : MonoBehaviour
 
     void Update()
     {
+	    FacingDirection();
         Move();
         Jump();
     }
@@ -40,11 +41,11 @@ public class playermove : MonoBehaviour
 		_rigid.velocity = new Vector2(x * _speed, _rigid.velocity.y);
 
 		//플레이어 좌우 방향 조절
-		if (Input.GetButtonDown("Horizontal"))
-		{
-			spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
-		}
-
+		// if (Input.GetButtonDown("Horizontal"))
+		// {
+		// 	spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+		// }
+		
 		//플레이어 이동 애니메이션
 		if (_rigid.velocity.x == 0)
 		{
@@ -124,4 +125,10 @@ public class playermove : MonoBehaviour
         gameObject.layer = 7;
 		spriteRenderer.color = new Color(1, 1, 1,1f);
 	}
+    //by jd player flip
+    void FacingDirection()
+    {
+	    if(_rigid.velocity.x < 0)spriteRenderer.flipX = true;//look at the dir of vec
+	    else spriteRenderer.flipX = false;
+    }
 }
