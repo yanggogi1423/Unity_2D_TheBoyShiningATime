@@ -4,25 +4,23 @@ using UnityEngine;
 
 public class playermove : MonoBehaviour
 {
-	[SerializeField] private float speed = 10.0f; //�¿� �̵��ӵ���
-	[SerializeField] private float jumpSpeed = 20.0f; //���� �̵��ӵ���
-	[SerializeField] private int playerHp = 4;
+    private float _speed = 10.0f; //�¿� �̵��ӵ���
+    private float _jumpSpeed = 20.0f; //���� �̵��ӵ���
+    private bool _isGround = true; //���� ���ɿ��� �Ǵ� ����
+    public int playerHp = 4;
 
-	[SerializeField] private bool isGround = true; //���� ���ɿ��� �Ǵ� ����
-	
     private Rigidbody2D _rigid;
-    private SpriteRenderer _spriteRenderer;
-    private Animator _animator;
+    SpriteRenderer spriteRenderer;
+    Animator animator;
     
 
     void Start()
     {
         _rigid = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
 
-        _rigid.gravityScale = 10.0f;
-    }
+	}
 
     void Update()
     {
@@ -39,22 +37,22 @@ public class playermove : MonoBehaviour
     {
 		//x�� �������� ������ �ӵ���ŭ �̵�
 		float x = Input.GetAxisRaw("Horizontal");
-		_rigid.velocity = new Vector2(x * speed, _rigid.velocity.y);
+		_rigid.velocity = new Vector2(x * _speed, _rigid.velocity.y);
 
 		//�÷��̾� �¿� ���� ����
 		if (Input.GetButtonDown("Horizontal"))
 		{
-			_spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+			spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
 		}
 
 		//�÷��̾� �̵� �ִϸ��̼�
 		if (_rigid.velocity.x == 0)
 		{
-			_animator.SetBool("isRun", false);
+			animator.SetBool("isRun", false);
 		}
 		else
 		{
-			_animator.SetBool("isRun", true);
+			animator.SetBool("isRun", true);
 		}
 	}
 
@@ -62,11 +60,11 @@ public class playermove : MonoBehaviour
 	void Jump()
     {
         //������ �ƴ� ���¿��� space�ٸ� ������ ����
-        if (Input.GetKeyDown(KeyCode.Space)&&isGround)
+        if (Input.GetKeyDown(KeyCode.Space)&&_isGround)
         {
-            _rigid.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
-            isGround = false;
-			_animator.SetBool("isJump", true);   
+            _rigid.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
+            _isGround = false;
+			animator.SetBool("isJump", true);   
 		}
         
         //Raycast�� �̿��ϴ� ���
@@ -92,8 +90,8 @@ public class playermove : MonoBehaviour
         //Ground�±��� ��ü�� ������ ������(�������°� �ƴҽ�)
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGround=true;
-            _animator.SetBool("isJump", false);
+            _isGround=true;
+            animator.SetBool("isJump", false);
         }
         //���Ϳ��� ���ظ� ���� ���
         if(collision.gameObject.tag == "Enemy")
@@ -106,7 +104,7 @@ public class playermove : MonoBehaviour
     {
         playerHp--;
         gameObject.layer = 8;
-        _spriteRenderer.color = new Color(1, 1, 1, 0.5f);
+        spriteRenderer.color = new Color(1, 1, 1, 0.5f);
 
         //�ǰݽ� �̵�
         int dict = 0;
@@ -117,13 +115,13 @@ public class playermove : MonoBehaviour
         _rigid.AddForce(new Vector2(dict,1)*1,ForceMode2D.Impulse);
 
         //�ǰ� �ִ�
-        _animator.SetTrigger("isDamaged");
+        animator.SetTrigger("isDamaged");
 
         Invoke("OffDamaged", 2);
     }
     void OffDamaged()
     {
         gameObject.layer = 7;
-		_spriteRenderer.color = new Color(1, 1, 1,1f);
+		spriteRenderer.color = new Color(1, 1, 1,1f);
 	}
 }
