@@ -1,4 +1,0 @@
-repository "Boy@unity_751F953C7CD1940F8635@cloud"
-  path "/"
-    br "/main"
-    co "/main"
