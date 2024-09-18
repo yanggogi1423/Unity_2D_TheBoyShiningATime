@@ -4,23 +4,25 @@ using UnityEngine;
 
 public class playermove : MonoBehaviour
 {
-    private float _speed = 10.0f; //ÁÂ¿ì ÀÌµ¿¼Óµµ°ª
-    private float _jumpSpeed = 20.0f; //Á¡ÇÁ ÀÌµ¿¼Óµµ°ª
-    private bool _isGround = true; //Á¡ÇÁ °¡´É¿©ºÎ ÆÇ´Ü º¯¼ö
-    public int playerHp = 4;
+	[SerializeField] private float speed = 10.0f; //ï¿½Â¿ï¿½ ï¿½Ìµï¿½ï¿½Óµï¿½ï¿½ï¿½
+	[SerializeField] private float jumpSpeed = 20.0f; //ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Óµï¿½ï¿½ï¿½
+	[SerializeField] private int playerHp = 4;
 
+	[SerializeField] private bool isGround = true; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½É¿ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½
+	
     private Rigidbody2D _rigid;
-    SpriteRenderer spriteRenderer;
-    Animator animator;
+    private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
     
 
     void Start()
     {
         _rigid = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
 
-	}
+        _rigid.gravityScale = 10.0f;
+    }
 
     void Update()
     {
@@ -32,42 +34,42 @@ public class playermove : MonoBehaviour
 		
 	}
 
-    //ÇÃ·¹ÀÌ¾î ÀÌµ¿°ü·Ã ÇÔ¼ö
+    //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     void Move()
     {
-		//xÃà ¹æÇâÀ¸·Î Á¤ÇØÁø ¼Óµµ¸¸Å­ ÀÌµ¿
+		//xï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ï¿½ï¿½Å­ ï¿½Ìµï¿½
 		float x = Input.GetAxisRaw("Horizontal");
-		_rigid.velocity = new Vector2(x * _speed, _rigid.velocity.y);
+		_rigid.velocity = new Vector2(x * speed, _rigid.velocity.y);
 
-		//ÇÃ·¹ÀÌ¾î ÁÂ¿ì ¹æÇâ Á¶Àý
+		//ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		if (Input.GetButtonDown("Horizontal"))
 		{
-			spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+			_spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
 		}
 
-		//ÇÃ·¹ÀÌ¾î ÀÌµ¿ ¾Ö´Ï¸ÞÀÌ¼Ç
+		//ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ìµï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
 		if (_rigid.velocity.x == 0)
 		{
-			animator.SetBool("isRun", false);
+			_animator.SetBool("isRun", false);
 		}
 		else
 		{
-			animator.SetBool("isRun", true);
+			_animator.SetBool("isRun", true);
 		}
 	}
 
-	//ÇÃ·¹ÀÌ¾îÀÇ Á¡ÇÁ°ü·Ã ÇÔ¼ö
+	//ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
 	void Jump()
     {
-        //°øÁßÀÌ ¾Æ´Ñ »óÅÂ¿¡¼­ space¹Ù¸¦ ´©¸£¸é Á¡ÇÁ
-        if (Input.GetKeyDown(KeyCode.Space)&&_isGround)
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ spaceï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        if (Input.GetKeyDown(KeyCode.Space)&&isGround)
         {
-            _rigid.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
-            _isGround = false;
-			animator.SetBool("isJump", true);   
+            _rigid.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
+            isGround = false;
+			_animator.SetBool("isJump", true);   
 		}
         
-        //Raycast¸¦ ÀÌ¿ëÇÏ´Â °æ¿ì
+        //Raycastï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
         /*
         if(_rigid.velocity.y < 0)
         {
@@ -84,29 +86,29 @@ public class playermove : MonoBehaviour
     }
 
 
-    //¶¥°úÀÇ Ãæµ¹À» Ã¼Å©ÇÏ´Â ÇÔ¼ö
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹ï¿½ï¿½ Ã¼Å©ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     void OnCollisionEnter2D(Collision2D collision)
     {
-        //GroundÅÂ±×ÀÎ ¹°Ã¼¿¡ Á¢ÃËÇØ ÀÖÀ»¶§(Á¡ÇÁ»óÅÂ°¡ ¾Æ´Ò½Ã)
+        //Groundï¿½Â±ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½ ï¿½Æ´Ò½ï¿½)
         if (collision.gameObject.CompareTag("Ground"))
         {
-            _isGround=true;
-            animator.SetBool("isJump", false);
+            isGround=true;
+            _animator.SetBool("isJump", false);
         }
-        //¸ó½ºÅÍ¿¡°Ô ÇÇÇØ¸¦ ÀÔÀº °æ¿ì
+        //ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         if(collision.gameObject.tag == "Enemy")
         {
             OnDamaged(collision.transform.position);
         }
     }
-    //ÇÇ°Ý°ü·Ã ÇÔ¼ö
+    //ï¿½Ç°Ý°ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     void OnDamaged(Vector2 nowPos)
     {
         playerHp--;
         gameObject.layer = 8;
-        spriteRenderer.color = new Color(1, 1, 1, 0.5f);
+        _spriteRenderer.color = new Color(1, 1, 1, 0.5f);
 
-        //ÇÇ°Ý½Ã ÀÌµ¿
+        //ï¿½Ç°Ý½ï¿½ ï¿½Ìµï¿½
         int dict = 0;
         if (transform.position.x - nowPos.x > 0)
             dict = 1;
@@ -114,14 +116,14 @@ public class playermove : MonoBehaviour
             dict = -1;
         _rigid.AddForce(new Vector2(dict,1)*1,ForceMode2D.Impulse);
 
-        //ÇÇ°Ý ¾Ö´Ï
-        animator.SetTrigger("isDamaged");
+        //ï¿½Ç°ï¿½ ï¿½Ö´ï¿½
+        _animator.SetTrigger("isDamaged");
 
         Invoke("OffDamaged", 2);
     }
     void OffDamaged()
     {
         gameObject.layer = 7;
-		spriteRenderer.color = new Color(1, 1, 1,1f);
+		_spriteRenderer.color = new Color(1, 1, 1,1f);
 	}
 }
