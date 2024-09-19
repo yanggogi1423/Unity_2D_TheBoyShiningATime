@@ -54,7 +54,7 @@ public class EnemyMoveSmart : MonoBehaviour
         //Platform Check
         Vector2 frontVec = new Vector2(_rigid.position.x + (0.6f * _rigid.velocity.normalized.x),_rigid.position.y);
         Debug.DrawRay(frontVec, Vector3.down,new Color(0,1,0));
-        RaycastHit2D rayHit = Physics2D.Raycast(frontVec,Vector3.down,1,LayerMask.GetMask("Platform"));
+        RaycastHit2D rayHit = Physics2D.Raycast(frontVec,Vector3.down,3,LayerMask.GetMask("Ground"));
         if (rayHit.collider == null)//When meet cliff turn around
         {
             _nextMove *= -1f;
