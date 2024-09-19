@@ -61,7 +61,7 @@ public class playermove : MonoBehaviour
 	void Jump()
     {
         //공중이 아닌 상태에서 space바를 누르면 점프
-        if (Input.GetKeyDown(KeyCode.Space)&&isGround)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))&&isGround)
         {
             _rigid.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
             isGround = false;
