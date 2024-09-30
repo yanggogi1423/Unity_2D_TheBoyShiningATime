@@ -3,38 +3,40 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyMoveSmart : MonoBehaviour
 {
-    Rigidbody2D _rigid;
-    Animator _anim;
-    SpriteRenderer _sprite;
-    BoxCollider2D _collider;
-    private float _nextMove = 1f;
-    private float _thinkTime = 7f;
-    void Awake()
+    private Rigidbody2D _rigid;
+    private Animator _anim;
+    private SpriteRenderer _sprite;
+    private BoxCollider2D _collider;
+    
+    [SerializeField] private float nextMove = 1f;
+    [SerializeField] private float thinkTime = 7f;
+
+    public UnityEvent onMonsterDeath = new UnityEvent();
+    
+    private void Awake()
     {
         _rigid = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         _sprite = GetComponent<SpriteRenderer>();
-        Invoke("Think",_thinkTime);
+        Invoke("Think",thinkTime);
     }
-
     
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         //Move
-        _rigid.velocity = new Vector2(_nextMove,_rigid.velocity.y);
+        _rigid.velocity = new Vector2(nextMove,_rigid.velocity.y);
         //Platform Check
         IsHit();
         CheckCliff();
         IsWakling();//idle or walking(animator)
         FacingDirection();//flip
-        
-        
     }
 
-    void IsHit()
+    private void IsHit()
     {
         Vector2 upVec = new Vector2(_rigid.position.x,_rigid.position.y);
         Debug.DrawRay(upVec, Vector3.up,new Color(0,1,0));
@@ -49,7 +51,7 @@ public class EnemyMoveSmart : MonoBehaviour
             Destroy(gameObject,3f);
         }
     }
-    void CheckCliff()
+    private void CheckCliff()
     {
         //Platform Check
         Vector2 frontVec = new Vector2(_rigid.position.x + (0.6f * _rigid.velocity.normalized.x),_rigid.position.y);
@@ -57,31 +59,34 @@ public class EnemyMoveSmart : MonoBehaviour
         RaycastHit2D rayHit = Physics2D.Raycast(frontVec,Vector3.down,3,LayerMask.GetMask("Ground"));
         if (rayHit.collider == null)//When meet cliff turn around
         {
-            _nextMove *= -1f;
+            nextMove *= -1f;
             CancelInvoke();
-            Invoke("Think",_thinkTime);
+            Invoke("Think",thinkTime);
         }
         
     }
-    void FacingDirection()
+    private void FacingDirection()
     {
         if(_rigid.velocity.x < 0)_sprite.flipX = true;//look at the dir of vec
         else _sprite.flipX = false;
     }
-    void IsWakling()
+    private void IsWakling()
     {
         if(_rigid.velocity.x != 0)_anim.SetBool("isWalking", true);//abs(velocity)>0 == walking
         else _anim.SetBool("isWalking", false);
     }
 
-    void DeActive()
+    private void Die()
     {
-        gameObject.SetActive(false);
+        //  setActive false에서 메모리 해제로 변경
+        onMonsterDeath.Invoke();
+        Destroy(this);
     }
-    void Think()//by enemy _thinkTime secs randomly choose it's velocity
+
+    private void Think()//by enemy _thinkTime secs randomly choose it's velocity
     {
-        _nextMove = Random.Range(-2,3);
-        Invoke("Think",_thinkTime);
+        nextMove = Random.Range(-2,3);
+        Invoke("Think",thinkTime);
         // _anim.SetFloat("walkSpeed",_nextMove);
     }
 }
