@@ -62,6 +62,7 @@ public class Spawner : MonoBehaviour
             if (curSpawn < maxSpawn)
             {
                 SpawnMonster();
+                Debug.Log("Spawn Monster");
             }
             yield return new WaitForSeconds(spawnRate);
         }
