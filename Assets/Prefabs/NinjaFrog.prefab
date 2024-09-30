@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1085295506287884224}
+  - component: {fileID: -4239496591803566381}
   - component: {fileID: 5977477972274449951}
   - component: {fileID: 4948688524437719388}
   - component: {fileID: 1371708573281417510}
   - component: {fileID: 3163724675405304221}
-  - component: {fileID: 6716763285480176854}
   m_Layer: 0
   m_Name: NinjaFrog
   m_TagString: Player
@@ -36,6 +36,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-4239496591803566381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6953348442455377086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b114b0b0925ea40c3a65ba5433c163b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onMonsterDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  nextMove: 1
+  thinkTime: 7
 --- !u!212 &5977477972274449951
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -181,32 +210,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9724055, y: 1.0144217}
   m_EdgeRadius: 0
---- !u!114 &6716763285480176854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6953348442455377086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b114b0b0925ea40c3a65ba5433c163b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _nextMove: 0
-  _thinkTime: 10
-  onMonsterDeath:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
