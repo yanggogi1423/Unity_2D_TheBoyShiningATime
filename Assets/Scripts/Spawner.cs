@@ -26,7 +26,7 @@ public class Spawner : MonoBehaviour
      */
     private void Start()
     {
-        StartCoroutine(MonsterSpwanCoroutine());
+        StartCoroutine(MonsterSpawnCoroutine());
         
         //  현재는 Monster Prefab을 수동으로 가져와야 함. 자동으로 폴더에서 Include하는 방법도 있지만 그건 나중에..
         if (monsterPrefabs.Length == 0)
@@ -68,7 +68,7 @@ public class Spawner : MonoBehaviour
         curSpawn--;
     }
 
-    private IEnumerator MonsterSpwanCoroutine()
+    private IEnumerator MonsterSpawnCoroutine()
     {
         while (true)
         {

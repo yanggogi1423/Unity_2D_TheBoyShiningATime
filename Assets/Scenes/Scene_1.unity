@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1161,7 +1160,8 @@ MonoBehaviour:
   maxSpawn: 5
   curSpawn: 0
   spawnRate: 1
-  monsterPrefabs: []
+  monsterPrefabs:
+  - {fileID: 6953348442455377086, guid: 0f08ee5c771f44ae0b3f017a2ea870a8, type: 3}
   spawnPoints:
   - {fileID: 2073890251}
   - {fileID: 882107185}
@@ -1177,8 +1177,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2063378983}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3631271, y: -0.6885181, z: 0.04750083}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.3631268, y: -0.68851805, z: 0.04750083}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
