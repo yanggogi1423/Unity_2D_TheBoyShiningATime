@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playermove : MonoBehaviour
+public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float speed = 10.0f; //좌우 이동속도값
     [SerializeField] private float jumpSpeed = 20.0f; //점프 이동속도값
@@ -118,7 +118,7 @@ public class playermove : MonoBehaviour
         //피격 애니
         _animator.SetTrigger("isDamaged");
 
-        Invoke("OffDamaged", 2);
+        Invoke("OffDamaged", 5);
     }
     void OffDamaged()
     {
@@ -129,6 +129,7 @@ public class playermove : MonoBehaviour
     void FacingDirection()
     {
 	    if(_rigid.velocity.x < 0) _spriteRenderer.flipX = true;//look at the dir of vec
+	    else if (_rigid.velocity.x == 0) ;
 	    else _spriteRenderer.flipX = false;
     }
 }
